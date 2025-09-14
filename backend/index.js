@@ -5,8 +5,23 @@ import apiRouter from "./routes/apiRoutes.js";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+const allowedOrigins = [
+  "https://your-frontend-app-name.onrender.com",
+  "http://localhost:5173",
+];
 
-app.use(cors());
+const corsOptions = {
+  origin: (origin, callback) => {
+    if (allowedOrigins.indexOf(origin) !== -1 || !origin) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
+  optionsSuccessStatus: 200,
+};
+
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.get("/", (req, res) => {

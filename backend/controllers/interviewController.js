@@ -57,13 +57,14 @@ export const generateQuestions = async (req, res) => {
     if (error.message?.includes("Unsupported file type")) {
       return res.status(400).json({ error: error.message });
     }
- 
+
     if (error.status >= 500) {
+      console.log(error);
       return res.status(error.status).json({
         error: `The AI service is currently unavailable. Please try again later. (Status: ${error.status})`,
       });
     }
-  
+
     if (error.status >= 400) {
       return res.status(error.status).json({
         error: `There was an issue with the AI service request. Please check your configuration. (Status: ${error.status})`,
