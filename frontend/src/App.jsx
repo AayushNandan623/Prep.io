@@ -13,8 +13,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
-  const apiUrl =
-    import.meta.env.VITE_API_BASE_URL || "http://localhost:3000/api";
+  const apiUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:3000";
 
   const handleFileSubmit = async (file, type, count) => {
     setIsLoading(true);
@@ -27,7 +26,7 @@ function App() {
 
     try {
       const response = await axios.post(
-        `${apiUrl}/generate-questions`,
+        `${apiUrl}/api/generate-questions`,
         formData,
         {
           headers: {
@@ -53,7 +52,7 @@ function App() {
     setErrorMessage("");
 
     try {
-      const response = await axios.post(`${apiUrl}/get-feedback`, {
+      const response = await axios.post(`${apiUrl}/api/get-feedback`, {
         question: allQuestions[questionIndex],
         answer: userAnswer,
       });

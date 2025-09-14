@@ -53,10 +53,23 @@ export const generateQuestions = async (req, res) => {
     const questions = JSON.parse(jsonResponseText);
     res.json({ questions });
   } catch (error) {
-    console.error("Error processing request:", error);
-    if (error.message.startsWith("Unsupported file type")) {
+    console.error("Error in generateQuestions:", error);
+    if (error.message?.includes("Unsupported file type")) {
       return res.status(400).json({ error: error.message });
     }
+ 
+    if (error.status >= 500) {
+      return res.status(error.status).json({
+        error: `The AI service is currently unavailable. Please try again later. (Status: ${error.status})`,
+      });
+    }
+  
+    if (error.status >= 400) {
+      return res.status(error.status).json({
+        error: `There was an issue with the AI service request. Please check your configuration. (Status: ${error.status})`,
+      });
+    }
+
     res.status(500).json({ error: "An internal server error occurred." });
   }
 };
