@@ -6,7 +6,7 @@ import apiRouter from "./routes/apiRoutes.js";
 const app = express();
 const PORT = process.env.PORT || 3000;
 const allowedOrigins = [
-  "https://your-frontend-app-name.onrender.com",
+  "https://prep-io-qnvm.onrender.com/",
   "http://localhost:5173",
 ];
 
